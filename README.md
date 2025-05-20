@@ -53,3 +53,8 @@ programs.mkSane = {
 ```
 
 Pull requests are open if you found another way to make nixos behave better or to make the workarounds less hacky.
+
+You can also add more libraries if the one you want isn't in `libraries.nix`
+
+> [!NOTE]
+> lib is one of the arguments for this module. If this poses a problem for you, create an issue and I'll change it.
