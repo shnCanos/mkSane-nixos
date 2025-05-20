@@ -93,4 +93,4 @@ With special enphasis in allowDiscards since this is the only way for fstrim to 
 
 In case you don't know where to find `<name>`, you might find it in `/etc/nixos/hardware-configuration.nix`
 ## Swappiness
-`kernel.sysctl = {"vm.swappiness" = 10;};` if you don't use a server for more responsiveness. The default is 60, which is exceedingly high and was causing me issues.
+`kernel.sysctl = {"vm.swappiness" = 10;};` if you don't use nixos as a server for more responsiveness. The default is 60, which is exceedingly high and was causing me issues.
