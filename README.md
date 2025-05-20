@@ -1,6 +1,9 @@
 # mkSane-fhs-nixos
 An extremely hacky approach to making nixos more approachable.
 
+![DESTROY THE REPRODUCIBILITY ALONG WITH EVERYTHING NIXOS STANDS FOR](https://github.com/shnCanos/mkSane-fhs-nixos/blob/main/picture.png)
+
+# Why
 By using this, you will get
 - nix-ld with libraries pre-configured
 - /lib, /bin, /sbin and their /usr/<path> equivalents populated (optional since it's extremely hacky and very prone to errors)
