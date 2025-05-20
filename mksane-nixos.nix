@@ -7,6 +7,8 @@ in
 		programs.mkSane = {
 			enable = lib.mkEnableOption "Whether to enable mksane";
 			copyPaths = lib.mkEnableOption "Whether to copy some paths from /run/current-system/sw to their expected places";
+			plasmaIcons = lib.mkEnableOption "Plasma icons";
+			gnomeIcons = lib.mkEnableOption "Gnome icons";
 		};
 	};
 	
@@ -27,7 +29,8 @@ in
 						paths = with pkgs; [
 							libsForQt5.breeze-qt5 # for plasma
 							# gnome.gnome-themes-extra
-						];
+						] ++ lib.optional (cfg.plasmaIcons) libsForQt5.breeze-qt5 
+							++ lib.optional (cfg.gnomeIcons) gnome.gnome-themes-extra;
 						pathsToLink = [ "/share/icons" ];
 					};
 					aggregatedFonts = pkgs.buildEnv {
