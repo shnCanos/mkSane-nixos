@@ -4,10 +4,15 @@ An extremely hacky approach to making nixos more approachable.
 ![DESTROY THE REPRODUCIBILITY ALONG WITH EVERYTHING NIXOS STANDS FOR](https://github.com/shnCanos/mkSane-fhs-nixos/blob/main/picture.png)
 
 # Table of Contents
+
+
 <!--toc:start-->
 - [Why](#why)
 - [Importing](#importing)
 - [Contributing](#contributing)
+- [Packages/Options I recommend](#packagesoptions-i-recommend)
+  - [SSD](#ssd)
+  - [Swappiness](#swappiness)
 <!--toc:end-->
 
 # Why
@@ -64,9 +69,28 @@ programs.mkSane = {
 
 # Contributing
 
-Pull requests are open if you found another way to make nixos behave better or to make the workarounds less hacky.
-
-You can also add more libraries if the one you want isn't in `libraries.nix`
+Pull requests are open. Some recommendations for pull requests are:
+- You found another way to make nixos behave more as expected (i.e. You want to add another workaround)
+- You found a way to make the workarounds less hacky
+- You want to add a library to `libraries.nix`
+- You want to add package or an option to [Packages/Options I recommend](#packagesoptions-i-recommend).
+- You found a typo somewhere.
 
 > [!NOTE]
 > lib is one of the arguments for this module. If this poses a problem for you, create an issue and I'll change it.
+
+# Packages/Options I recommend
+
+This flake is meant for hacks, but here's a list of options/packages that I recommend people enable/install so their system works normally:
+## SSD
+`services.fstrim.enable` set to true if you use an ssd.
+
+If your drive is encrypted, check out:
+- `boot.initrd.luks.devices.<name>.allowDiscards`
+- `boot.initrd.luks.devices.<name>.bypassWorkqueues`
+
+With special enphasis in allowDiscards since this is the only way for fstrim to work. **Enabling this option in my system sped it up *considerably* and caused it to stop freezing**
+
+In case you don't know where to find `<name>`, you might find it in `/etc/nixos/hardware-configuration.nix`
+## Swappiness
+`kernel.sysctl = {"vm.swappiness" = 10;};` if you don't use a server for more responsiveness. The default is 60, which is exceedingly high and was causing me issues.
