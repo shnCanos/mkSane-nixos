@@ -3,6 +3,13 @@ An extremely hacky approach to making nixos more approachable.
 
 ![DESTROY THE REPRODUCIBILITY ALONG WITH EVERYTHING NIXOS STANDS FOR](https://github.com/shnCanos/mkSane-fhs-nixos/blob/main/picture.png)
 
+# Table of Contents
+<!--toc:start-->
+- [Why](#why)
+- [Importing](#importing)
+- [Contributing](#contributing)
+<!--toc:end-->
+
 # Why
 By using this, you will get
 - nix-ld with libraries pre-configured
@@ -54,6 +61,8 @@ programs.mkSane = {
 	gnomeIcons = bool;
 };
 ```
+
+# Contributing
 
 Pull requests are open if you found another way to make nixos behave better or to make the workarounds less hacky.
 
