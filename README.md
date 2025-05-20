@@ -9,7 +9,7 @@ By using this, you will get
 For my use-case is this:
 - Use lazyvim with no problems
 - Compile bevy projects with no problems
-- Run bash scripts with /bin/bash (check out [envfs](https://github.com/Mic92/envfs)) if you don't want something as hacky as `copyPaths`.
+- Run bash scripts with /bin/bash (check out [envfs](https://github.com/Mic92/envfs) if you don't want something as hacky as `copyPaths`).
 - Probably more things
 
 Note:
