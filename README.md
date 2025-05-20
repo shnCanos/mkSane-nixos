@@ -1,7 +1,7 @@
-# mkSane-fhs-nixos
+# mkSane-nixos
 An extremely hacky approach to making nixos more approachable.
 
-![DESTROY THE REPRODUCIBILITY ALONG WITH EVERYTHING NIXOS STANDS FOR](https://github.com/shnCanos/mkSane-fhs-nixos/blob/main/picture.png)
+![DESTROY THE REPRODUCIBILITY ALONG WITH EVERYTHING NIXOS STANDS FOR](https://github.com/shnCanos/mkSane-nixos/blob/main/picture.png)
 
 # Table of Contents
 
@@ -42,12 +42,12 @@ Yes, I know. It's hacky, but it does the job.
 # Importing
 Add
 ```nix
-mkSane-fhs-nixos.url = "github:shnCanos/mkSane-fhs-nixos";
+mkSane-nixos.url = "github:shnCanos/mkSane-nixos";
 ```
 To your inputs and then
 ```nix
 imports = [
-	inputs.mkSane-fhs-nixos.nixosModules.mkSane-fhs-nixos
+	inputs.mkSane-nixos.nixosModules.mkSane-nixos
 ];
 ```
 Somewhere in your configuration.
