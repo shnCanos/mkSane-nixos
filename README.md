@@ -18,7 +18,7 @@ An approach to making nixos more approachable.
 # Why
 By using this, you will get
 - [nix-ld](https://github.com/nix-community/nix-ld) with libraries pre-configured
-- /bin and /usr/bin populated with 
+- /bin and /usr/bin populated with [envfs](https://github.com/Mic92/envfs)
 - /lib, /sbin and their /usr/<path> equivalents populated (optional since it's extremely hacky, very prone to errors, and useless as far as I know)
 - [bindfs for font support](https://nixos.wiki/wiki/Fonts#Using_bindfs_for_font_support)
 
@@ -29,7 +29,7 @@ For my use-case is this:
 - Probably more things
 
 Note:
-If you're using a shell other than bash (specifically nushell), add these two variables to your configuration:
+If you're using a shell other than bash (specifically nushell), add these variables to your configuration:
 
 ```nushell
 $env.LD_LIBRARY_PATH = "/run/current-system/sw/lib"
