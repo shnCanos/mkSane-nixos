@@ -4,10 +4,11 @@ in {
   options = {
     programs.mkSane = {
       enable = lib.mkEnableOption "Whether to enable mksane";
-      copyPaths = lib.mkEnableOption
+      copyLibSbinPaths = lib.mkEnableOption
         "Whether to copy some paths from /run/current-system/sw to their expected places";
       plasmaIcons = lib.mkEnableOption "Plasma icons";
       gnomeIcons = lib.mkEnableOption "Gnome icons";
+			envfsResolveAlways = lib.mkEnableOption "Whether envfs should always resolve the paths (see its documentation)";
     };
   };
 
@@ -37,11 +38,9 @@ in {
       "/usr/local/share/fonts" = mkRoSymBind "${aggregatedFonts}/share/fonts";
     };
 
-    system.activationScripts = lib.mkIf cfg.copyPaths {
-      copyBin = {
-        text =
-          "	# Binary packages\n	${pkgs.rsync}/bin/rsync -a --ignore-existing /run/current-system/sw/bin /\n	${pkgs.rsync}/bin/rsync -a --ignore-existing /run/current-system/sw/bin /usr/\n";
-      };
+		services.envfs.enable = true;
+
+    system.activationScripts = lib.mkIf cfg.copyLibSbinPaths {
       copyLib = {
         text =
           "	# Libraries (done by nix-ld, but anyway)\n	${pkgs.rsync}/bin/rsync -a --ignore-existing /run/current-system/sw/lib /\n	${pkgs.rsync}/bin/rsync -a --ignore-existing /run/current-system/sw/lib /usr/\n";
@@ -58,6 +57,8 @@ in {
       # For some reason nix-ld doesn't add all of them so I add this path
       LD_LIBRARY_PATH = lib.mkForce "/run/current-system/sw/lib";
       PKG_CONFIG_PATH = "/run/current-system/sw/lib/pkgconfig";
-    };
+    } // lib.optionalAttrs cfg.envfsResolveAlways {
+			ENVFS_RESOLVE_ALWAYS=1;
+		};
   };
 }

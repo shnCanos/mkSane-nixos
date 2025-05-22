@@ -1,7 +1,7 @@
 # mkSane-nixos
-An extremely hacky approach to making nixos more approachable.
+An approach to making nixos more approachable.
 
-![DESTROY THE REPRODUCIBILITY ALONG WITH EVERYTHING NIXOS STANDS FOR](https://github.com/shnCanos/mkSane-nixos/blob/main/picture.png)
+![DESTROY EVERYTHING NIXOS STANDS FOR](https://github.com/shnCanos/mkSane-nixos/blob/main/picture.png)
 
 # Table of Contents
 
@@ -17,14 +17,15 @@ An extremely hacky approach to making nixos more approachable.
 
 # Why
 By using this, you will get
-- nix-ld with libraries pre-configured
-- /lib, /bin, /sbin and their /usr/<path> equivalents populated (optional since it's extremely hacky and very prone to errors)
+- [nix-ld](https://github.com/nix-community/nix-ld) with libraries pre-configured
+- /bin and /usr/bin populated with 
+- /lib, /sbin and their /usr/<path> equivalents populated (optional since it's extremely hacky, very prone to errors, and useless as far as I know)
 - [bindfs for font support](https://nixos.wiki/wiki/Fonts#Using_bindfs_for_font_support)
 
 For my use-case is this:
 - Use lazyvim with no problems
 - Compile bevy projects with no problems
-- Run bash scripts with /bin/bash (check out [envfs](https://github.com/Mic92/envfs) if you don't want something as hacky as `copyPaths`).
+- Run bash scripts with /bin/bash (This is done with [envfs](https://github.com/Mic92/envfs). `copyLibSbinPaths` literally copies the lib and sbin paths to their expected positions, but this is, as far as I know, not needed. And since doing so is extremely hacky, it's not something I recommend either. Only enable this option if not doing so gives you issues).
 - Probably more things
 
 Note:
@@ -33,6 +34,8 @@ If you're using a shell other than bash (specifically nushell), add these two va
 ```nushell
 $env.LD_LIBRARY_PATH = "/run/current-system/sw/lib"
 $env.PKG_CONFIG_PATH = "/run/current-system/sw/lib/pkgconfig"
+# Additionally, setting envfsResolveAlways is equivalent to this
+$env.ENVFS_RESOLVE_ALWAYS = 1
 ```
 
 Since only bash imports them automatically.
@@ -52,18 +55,29 @@ imports = [
 ```
 Somewhere in your configuration.
 
-The options are:
+Then you need to set the options. They are:
 ```nix
 programs.mkSane = {
 	# Enable this
 	enable = bool;
 	# Whether to copy /lib, /bin etc to their respective places in a super hacky way
-	copyPaths = bool;
+	copyLibSbinPaths = bool;
 	# See https://nixos.wiki/wiki/Fonts#Using_bindfs_for_font_support
 	# Whether to enable plasma icons
 	plasmaIcons = bool;
 	# Whether to enable gnome icons
 	gnomeIcons = bool;
+	# See https://github.com/Mic92/envfs?tab=readme-ov-file#demo
+	envfsResolveAlways = bool;
+};
+```
+
+For instance:
+```nix
+programs.mkSane = {
+	enable = true;
+	plasmaIcons = true;
+	envfsResolveAlways = true;
 };
 ```
 
@@ -89,7 +103,7 @@ If your drive is encrypted, check out:
 - `boot.initrd.luks.devices.<name>.allowDiscards`
 - `boot.initrd.luks.devices.<name>.bypassWorkqueues`
 
-With special enphasis in allowDiscards since this is the only way for fstrim to work. **Enabling this option in my system sped it up *considerably* and caused it to stop freezing**
+With special enphasis in allowDiscards since this is the only way for fstrim to work. Note: Enabling this option in my system sped it up *considerably* and caused it to stop freezing.
 
 In case you don't know where to find `<name>`, you might find it in `/etc/nixos/hardware-configuration.nix`
 ## Swappiness
