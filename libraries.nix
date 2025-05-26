@@ -29,7 +29,7 @@ let
     libxkbcommon
     mesa
     nspr
-    nss
+    # nss
     pango
     pipewire
     systemd
