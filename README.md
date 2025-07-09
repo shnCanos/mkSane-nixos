@@ -32,9 +32,10 @@ Note:
 If you're using a shell other than bash (specifically nushell), add these variables to your configuration:
 
 ```nushell
+# Setting nix-ld.addEnvVariables
 $env.LD_LIBRARY_PATH = "/run/current-system/sw/lib"
 $env.PKG_CONFIG_PATH = "/run/current-system/sw/lib/pkgconfig"
-# Additionally, setting envfsResolveAlways is equivalent to this
+# Additionally, setting envfs.envfsResolveAlways is equivalent to this
 $env.ENVFS_RESOLVE_ALWAYS = 1
 ```
 
@@ -63,12 +64,24 @@ programs.mkSane = {
 	# Whether to copy /lib, /bin etc to their respective places in a super hacky way
 	copyLibSbinPaths = bool;
 	# See https://nixos.wiki/wiki/Fonts#Using_bindfs_for_font_support
-	# Whether to enable plasma icons
-	plasmaIcons = bool;
-	# Whether to enable gnome icons
-	gnomeIcons = bool;
+	flatpakFontsWorkaround = {
+		# Whether to enable the workaround for font support
+		enable = bool;
+		# Whether to enable plasma icons
+		plasmaIcons = bool;
+		# Whether to enable gnome icons
+		gnomeIcons = bool;
+	};
 	# See https://github.com/Mic92/envfs?tab=readme-ov-file#demo
-	envfsResolveAlways = bool;
+	envfs = {
+		enable = bool;
+		envfsResolveAlways = bool;
+	};
+	# See https://github.com/nix-community/nix-ld
+	nix-ld = {
+		enable = bool;
+		addEnvVariables = bool;
+	};
 };
 ```
 
@@ -77,7 +90,14 @@ For instance:
 programs.mkSane = {
 	enable = true;
 	plasmaIcons = true;
-	envfsResolveAlways = true;
+	flatpakFontsWorkaround = {
+		enable = true;
+		plasmaIcons = true;
+	};
+	envfs = {
+		enable = true;
+		envfsResolveAlways = true;
+	};
 };
 ```
 
