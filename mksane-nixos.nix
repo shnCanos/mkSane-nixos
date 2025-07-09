@@ -53,7 +53,7 @@ in {
           pathsToLink = ["/share/fonts"];
         };
       in
-        lib.mkIf (cfg.flatpakFontsWorkaround) {
+        lib.mkIf (cfg.flatpakFontsWorkaround.enable) {
           "/usr/share/icons" = mkRoSymBind "${aggregatedIcons}/share/icons";
           "/usr/local/share/fonts" = mkRoSymBind "${aggregatedFonts}/share/fonts";
         };
