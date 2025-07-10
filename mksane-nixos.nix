@@ -33,7 +33,7 @@ in {
   in
     lib.mkIf (cfg.enable) {
       # Flatpak fonts workaround
-      system.fsPackages = lib.optionals cfg.flatpakFontsWorkaround [pkgs.bindfs];
+      system.fsPackages = lib.optionals cfg.flatpakFontsWorkaround.enable [pkgs.bindfs];
       fileSystems = let
         mkRoSymBind = path: {
           device = path;
