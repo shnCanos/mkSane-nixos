@@ -43,8 +43,8 @@ in {
         aggregatedIcons = pkgs.buildEnv {
           name = "system-icons";
           paths = with pkgs;
-            lib.optional (cfg.plasmaIcons) libsForQt5.breeze-qt5
-            ++ lib.optional (cfg.gnomeIcons) gnome.gnome-themes-extra;
+            lib.optional (cfg.flatpakFontsWorkaround.plasmaIcons) libsForQt5.breeze-qt5
+            ++ lib.optional (cfg.flatpakFontsWorkaround.gnomeIcons) gnome.gnome-themes-extra;
           pathsToLink = ["/share/icons"];
         };
         aggregatedFonts = pkgs.buildEnv {
@@ -77,7 +77,7 @@ in {
           LD_LIBRARY_PATH = lib.mkForce "/run/current-system/sw/lib";
           PKG_CONFIG_PATH = "/run/current-system/sw/lib/pkgconfig";
         }
-        // lib.optionalAttrs cfg.envfsResolveAlways {
+        // lib.optionalAttrs cfg.envfs.envfsResolveAlways {
           ENVFS_RESOLVE_ALWAYS = 1;
         };
     };
