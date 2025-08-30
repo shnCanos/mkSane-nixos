@@ -43,7 +43,7 @@ in {
         aggregatedIcons = pkgs.buildEnv {
           name = "system-icons";
           paths = with pkgs;
-            lib.optional (cfg.flatpakFontsWorkaround.plasmaIcons) libsForQt5.breeze-qt5
+            lib.optional (cfg.flatpakFontsWorkaround.plasmaIcons) kdePackages.breeze
             ++ lib.optional (cfg.flatpakFontsWorkaround.gnomeIcons) gnome.gnome-themes-extra;
           pathsToLink = ["/share/icons"];
         };
